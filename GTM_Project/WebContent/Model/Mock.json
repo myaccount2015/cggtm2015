@@ -1,0 +1,33 @@
+ 
+	"MD15MATCollModel" : [
+
+		{
+		
+		"Batch": "",
+"DefectLocation": "",
+"DefectType": "",
+"DeliveryNumber": "",
+"MaterialNumber": "KSD-GD",
+"NotificationDescription": "TEST FOR MOBILE APP",
+"NotificationLongText": "/Hi this the test notification",
+"NotificationNo": "200000021",
+"NotificationType": "Q2",
+"PlannedFinishDate": "/Date(1395878400000)/",
+"PlannedStartDate": "/Date(1395878400000)/",
+"PlantForMaterial": "GB11",
+"Priority": "2",
+"PurchaseOrder": "4500000159",
+"PurchaseOrderItem": "00010",
+"Quantity": "2100.000",
+"RevisionLevel": "",
+"SalesOrder": "",
+"SerialNumber": "",
+"TaskCode": "0005",
+"TaskCodeText": "Correction in SD, shipping",
+"TaskSequence": "0004",
+"TaskStatus": "",
+"TaskText": "",
+}
+
+
+]

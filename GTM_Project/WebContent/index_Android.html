@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<meta charset="utf-8" />
+
+<meta name="viewport"
+	content="minimal-ui, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<script src="util/StringUtility.js"></script>
+<script src="util/LogonUtil.js"></script>
+<script src="util/oDataUtility.js"></script>
+<script src="util/CommonUtil.js"></script>
+<script src="Model/MockMode.js"></script>
+<script src="util/NavigationUtil.js"></script>
+<script src="util/UniqueRecFinder.js"></script>
+<script src="util/crypto/core-min.js"></script>
+<script src="util/crypto/enc-utf16-min.js"></script>
+<script type="text/javascript" charset="utf-8" src="util/Jobs.js"></script>
+
+<script src="util/BGProcessor/BGUtil.js"></script>
+<script src="util/BGProcessor/W_MasterDataLoad.js"></script>
+
+<script type="text/javascript" charset="utf-8"
+	src="util/AssetFunctions.js"></script>
+<script type="text/javascript" charset="utf-8"
+	src="util/HelpDocument.js"></script>
+<script src="comms.js"></script>
+
+<!-- DMS Functions -->
+<script src="util/DMSImageFunctions/DMSFunction.js"></script>
+<script src="util/DMSImageFunctions/iscroll-zoom.js"></script>
+<script type="text/javascript" charset="utf-8"
+	src="util/DMSImageFunctions/canvasJS/canvas-to-blob.min.js"></script>
+<script type="text/javascript" charset="utf-8"
+	src="util/DMSImageFunctions/canvasJS/UploadImageToSAPServer.js"></script>
+
+
+
+<script src="util/Formatter.js"></script>
+<script src="util/worker/Worker_PingTest.js"></script>
+<script src="util/worker/ShowSettingsPage.js"></script>
+<script src="util/worker/LaunchpadService.js"></script>
+<script src="util/worker/LogOffService.js"></script>
+<script src="util/worker/Worker_MasterDataLoad.js"></script>
+<script type="text/javascript" charset="utf-8"
+	src="util/BGProcessor/W_AssetDataLoad.js"></script>
+<script type="text/javascript" charset="utf-8"
+	src="util/worker/Worker_Drop3HookUp.js"></script>
+<script type="text/javascript" charset="utf-8"
+	src="util/worker/Worker_AssetList.js"></script>
+
+<!-- Offline function -->
+<script src="util/worker/Mob15SoldToParty.js"></script>
+<script src="util/worker/Mob15DefectLocation.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="util/GTM_LaunchpadService.js"></script>
+<script id="sap-ui-bootstrap" src="resources/sap-ui-core.js"
+	data-sap-ui-theme="sap_bluecrystal"
+	data-sap-ui-libs="sap.m, sap.ui.layout"
+	data-sap-ui-xx-bindingSyntax="complex"
+	data-sap-ui-resourceroots='{"com.cg.gtm": "./"}'>
+	
+</script>
+
+
+<script>
+	function onLoad() {
+		document.addEventListener("deviceready", onDeviceReady, false);
+		//document.addEventListener('touchstart', onTouchStart, false); //Removing User Inactivity
+	}
+
+	var pictureSource; // picture source 
+	var destinationType; // sets the format of returned value 
+	var source;
+
+	function onTouchStart() {
+
+		var isUserInactive = true;
+		var createdTime = window.localStorage.getItem("USERTOUCH");
+
+		if (typeof createdTime == 'undefined' || createdTime == null) {
+			isUserInactive = false;
+		}
+		var currDate = new Date();
+		var timeMilli = currDate.getTime();
+		var timeElapsed = (timeMilli - createdTime) / (1000 * 60); //In Minute
+
+		if (timeElapsed >= 2) {
+
+			startBGPingTester(); //This will make sure when user is active ping test also active
+
+			var currDate = new Date();
+			var timeMilli = currDate.getTime();
+			window.localStorage.setItem("USERTOUCH", timeMilli);
+		}
+
+	}
+
+	function onDeviceReady() {
+		pictureSource = navigator.camera.PictureSourceType;
+		destinationType = navigator.camera.DestinationType;
+		source = pictureSource.PHOTOLIBRARY;
+
+		document.addEventListener("backbutton", onBackKeyDown, false);
+		new sap.ui.core.ComponentContainer({
+			name : "com.cg.gtm"
+		}).placeAt("content");
+	}
+	function onBackKeyDown() {
+		sap.ui.getCore().byId(g_MobileNavigationId).fireNavButtonTap();
+	}
+</script>
+<link rel="stylesheet" type="text/css" href="css/HRE_Style.css">
+
+</head>
+
+<body class="sapUiBody" role="application" onload="onLoad()">
+
+	<div id="content">
+		<canvas id="myCanvas" width="400" height="400" />
+	</div>
+
+	<script src="cordova.js"></script>
+</body>
+
+</html>
